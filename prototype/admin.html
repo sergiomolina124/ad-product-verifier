@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Ad Product Programmatic Verifier</title>
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body class="admin-body">
+
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-label">Admin Panel</div>
+      <h1>Ad Product Verifier</h1>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-btn active" data-tab="options">
+        <span class="nav-icon">⚙️</span> Options
+      </button>
+      <button class="nav-btn" data-tab="recommendations">
+        <span class="nav-icon">🗂️</span> Recommendations
+      </button>
+      <button class="nav-btn" data-tab="settings">
+        <span class="nav-icon">🔧</span> Settings
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="index.html">
+        <span>←</span> Back to App
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main area -->
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <span class="topbar-title" id="topbarTitle">Options</span>
+      <span class="topbar-saved" id="topbarSaved">✓ Saved</span>
+    </header>
+
+    <div class="admin-content">
+
+      <!-- Options tab -->
+      <div id="tab-options" class="tab-pane active">
+
+        <div class="section">
+          <div class="section-header">
+            <div class="section-header-left">
+              <div class="section-icon icon-blue">📡</div>
+              <div>
+                <h2>SSPs</h2>
+                <p>Supply-Side Platforms and their routing rules</p>
+              </div>
+            </div>
+            <button class="btn-add" data-action="add" data-section="ssps">+ Add SSP</button>
+          </div>
+          <div class="section-body">
+            <div id="ssp-list" class="item-list"></div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">
+            <div class="section-header-left">
+              <div class="section-icon icon-purple">📺</div>
+              <div>
+                <h2>DSPs</h2>
+                <p>Demand-Side Platforms and their routing rules</p>
+              </div>
+            </div>
+            <button class="btn-add" data-action="add" data-section="dsps">+ Add DSP</button>
+          </div>
+          <div class="section-body">
+            <div id="dsp-list" class="item-list"></div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">
+            <div class="section-header-left">
+              <div class="section-icon icon-green">🔄</div>
+              <div>
+                <h2>Transaction Types</h2>
+                <p>Configure whether a geography step is required</p>
+              </div>
+            </div>
+            <button class="btn-add" data-action="add" data-section="transactionTypes">+ Add Type</button>
+          </div>
+          <div class="section-body">
+            <div id="tx-list" class="item-list"></div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">
+            <div class="section-header-left">
+              <div class="section-icon icon-orange">🌍</div>
+              <div>
+                <h2>Geographies</h2>
+                <p>Available geography options for PG transactions</p>
+              </div>
+            </div>
+            <button class="btn-add" data-action="add" data-section="geographies">+ Add Geography</button>
+          </div>
+          <div class="section-body">
+            <div id="geo-list" class="item-list"></div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">
+            <div class="section-header-left">
+              <div class="section-icon icon-pink">🎯</div>
+              <div>
+                <h2>Ad Products</h2>
+                <p>Products available for selection in the final step</p>
+              </div>
+            </div>
+            <button class="btn-add" data-action="add" data-section="adProducts">+ Add Ad Product</button>
+          </div>
+          <div class="section-body">
+            <div id="ap-list" class="item-list"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Recommendations tab -->
+      <div id="tab-recommendations" class="tab-pane">
+        <div class="section">
+          <div class="section-header">
+            <div class="section-header-left">
+              <div class="section-icon icon-blue">🗂️</div>
+              <div>
+                <h2>Recommendation Matrix</h2>
+                <p>Set the build platform per DSP, transaction type, and ad product</p>
+              </div>
+            </div>
+          </div>
+          <div class="section-body">
+            <p class="section-note">Only DSPs set to "Proceed to transaction" appear here. Changes are saved automatically.</p>
+            <div id="rec-matrix"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings tab -->
+      <div id="tab-settings" class="tab-pane">
+
+        <div class="section">
+          <div class="section-header">
+            <div class="section-header-left">
+              <div class="section-icon icon-slate">🏗️</div>
+              <div>
+                <h2>Build Platforms</h2>
+                <p>Platforms available in the recommendation matrix</p>
+              </div>
+            </div>
+            <button class="btn-add" id="addPlatformBtn">+ Add Platform</button>
+          </div>
+          <div class="section-body">
+            <div id="platform-list" class="item-list"></div>
+          </div>
+        </div>
+
+        <div class="section danger-section">
+          <div class="section-header">
+            <div class="section-header-left">
+              <div class="section-icon icon-pink">⚠️</div>
+              <div>
+                <h2>Reset to Defaults</h2>
+                <p>Restore all options and recommendations to their original values</p>
+              </div>
+            </div>
+          </div>
+          <div class="section-body">
+            <button class="btn-danger" id="resetBtn">Reset to Defaults</button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Unsaved changes bar -->
+  <div id="unsavedBar" class="unsaved-bar" style="display:none;">
+    <span>You have unsaved changes</span>
+    <div class="unsaved-bar-actions">
+      <button class="btn-discard" id="discardBtn">Discard</button>
+      <button class="btn-save" id="saveBtn">Save Changes</button>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

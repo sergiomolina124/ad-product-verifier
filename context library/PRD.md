@@ -5,13 +5,15 @@
 
 ## 1. Introduction
 
-This document outlines the consolidated requirements for a tool that guides users through the selection of an SSP, DSP, and specific ad products. The tool provides clear, step-by-step instructions and build recommendations based on the user's choices.
+This document outlines the consolidated requirements for a tool that guides users through the selection of an SSP, DSP, and specific ad products. The tool provides clear, step-by-step instructions and build recommendations based on the user's choices. An admin panel allows authorized users to manage all decision tree options and recommendations without modifying code.
 
 ---
 
 ## 2. Product Description
 
 The **Ad Product Programmatic Verifier** is a web-based tool designed to streamline the decision-making process for advertising professionals. By presenting a series of choices, the tool offers precise build recommendations (e.g., "build in Platform 1," "build in Platform 2," "build in Platform 3," or "build in Platform 4") tailored to the specific combination of SSP, DSP, transaction type, and ad product selected.
+
+An **Admin Panel** provides an interface for managing all options in the decision tree and the recommendation logic, without requiring code changes.
 
 ---
 
@@ -163,17 +165,59 @@ Ask: **"Is the Geography US or International?"**
 
 ---
 
-## 6. Technical Requirements
+## 6. Admin Panel
 
-- **Frontend:** HTML, CSS, JavaScript
-- **Logic:** JavaScript to handle the complex, multi-layered user flow
-- **Responsiveness:** Simple, responsive web page for a clean, intuitive UX
-- **Backend:** None required — no database or user authentication
-- **Navigation:** The UI will guide the user through each step without dead ends, except for clearly-defined terminal recommendation points
+### 6.1 Access
+
+- The admin panel is accessible via a dedicated `/admin.html` page, linked from a visible **Admin Settings** button in the main app footer.
+- No password or authentication is required at this time.
+
+### 6.2 Options Management
+
+Admins can add, rename, and delete items from each step in the decision tree:
+
+| Section | Configurable Fields |
+|---|---|
+| SSPs | Name, Routing action (Proceed to DSP / Build externally) |
+| DSPs | Name, Routing action (Proceed to transaction / Direct to platform), Platform (if direct) |
+| Transaction Types | Name, Requires geography (yes/no) |
+| Geographies | Name |
+| Ad Products | Name |
+
+**Behavior on add:** New items are immediately available in the end-user flow. New DSPs, transaction types, or ad products automatically generate corresponding recommendation entries (defaulting to Platform 2).
+
+**Behavior on delete:** The item is removed from the user flow and all associated recommendation entries are cleaned up.
+
+### 6.3 Recommendation Matrix
+
+- A matrix view allows admins to configure the build platform for every **DSP × Transaction Type × Ad Product** combination.
+- Only DSPs set to "Proceed to transaction" appear in the matrix.
+- Each cell contains a dropdown with all available platforms.
+- Changes are held in memory until explicitly committed. A persistent **"You have unsaved changes"** bar appears at the bottom of the screen whenever there are pending edits, offering two actions:
+  - **Save Changes** — writes all pending changes to `localStorage` and confirms with a "✓ Saved" indicator.
+  - **Discard** — reverts all pending changes back to the last saved state.
+
+### 6.4 Settings
+
+| Setting | Description |
+|---|---|
+| Platforms | Add, rename, or delete available build platforms. Renaming cascades to all recommendation entries and DSP direct routes. |
+| Reset to Defaults | Restores all options and recommendations to the original default values. |
 
 ---
 
-## 7. Success Metrics
+## 7. Technical Requirements
+
+- **Frontend:** HTML, CSS, Vanilla JavaScript
+- **Persistence:** `localStorage` for configuration and recommendation data
+- **Responsiveness:** Simple, responsive layout for a clean, intuitive UX on both desktop and mobile
+- **Backend:** None required — no database or user authentication server
+- **Navigation:** The user flow has no dead ends except for clearly-defined terminal recommendation points
+- **Admin entry point:** `admin.html`, linked from the main app footer
+
+---
+
+## 8. Success Metrics
 
 | Metric | Description |
 |---|---|
