@@ -37,7 +37,7 @@ All changes are held in memory until explicitly saved or discarded via the persi
 No installation or build step required. Open the prototype directly in a browser:
 
 ```
-prototype/index.html
+app/index.html
 ```
 
 ---
@@ -48,7 +48,7 @@ prototype/index.html
 ad-product-verifier/
 ├── context library/
 │   └── PRD.md                  # Product Requirements Document
-└── prototype/
+└── app/
     ├── index.html              # App entry point
     ├── styles.css              # App styles
     ├── script.js               # Decision flow logic
